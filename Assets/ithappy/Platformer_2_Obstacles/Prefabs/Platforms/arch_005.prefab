@@ -63,6 +63,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 7f11925cce986ed4995692f412c399a7,
+        type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 7f11925cce986ed4995692f412c399a7,
+        type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: -0.00000047683716
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 7f11925cce986ed4995692f412c399a7,
+        type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 4.746004
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 7f11925cce986ed4995692f412c399a7,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 6.216483
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 7f11925cce986ed4995692f412c399a7,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 4.8391123
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 7f11925cce986ed4995692f412c399a7,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 9.735223
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7f11925cce986ed4995692f412c399a7,
         type: 3}
       propertyPath: m_Name
@@ -111,7 +141,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3640909426954230266, guid: 7f11925cce986ed4995692f412c399a7, type: 3}
 --- !u!95 &7371751599353154856

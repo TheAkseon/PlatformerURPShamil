@@ -49,14 +49,14 @@ public class PlayerMover : MonoBehaviour
 
         // Изменение: проверка нажатия клавиши Shift для ускорения
         float currentSpeed = speed;
-        if (Input.GetKey(KeyCode.LeftShift)) // Проверяем, удерживается ли клавиша Shift
+        if (Input.GetKey(KeyCode.LeftShift) && !isJumping) // Проверяем, удерживается ли клавиша Shift
         {
             currentSpeed *= sprintMultiplier; // Увеличиваем скорость при удерживании Shift
             playerAnimation.Run(true); // Если бежим, устанавливаем состояние Run
             playerAnimation.Walk(false);
             playerAnimation.Idle(false);
         }
-        else if (move.magnitude > 0) // Если есть движение
+        else if (move.magnitude > 0 && !isJumping) // Если есть движение
         {
             playerAnimation.Walk(true); // Если движемся, устанавливаем состояние Walk
             playerAnimation.Run(false);
