@@ -188,6 +188,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4084228934684172019, guid: cef780495b60c824390cde12a7263714,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1395430124514419386}
+    - targetCorrespondingSourceObject: {fileID: 4084228934684172019, guid: cef780495b60c824390cde12a7263714,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8347513948754478341}
     - targetCorrespondingSourceObject: {fileID: 4084228934684172019, guid: cef780495b60c824390cde12a7263714,
         type: 3}
@@ -235,6 +239,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1395430124514419386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983995501988565840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ade4b493744c4f44800e788c4b6c419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CountCollectedCoin: 0
 --- !u!114 &8347513948754478341
 MonoBehaviour:
   m_ObjectHideFlags: 0
