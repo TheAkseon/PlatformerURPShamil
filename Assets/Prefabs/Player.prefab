@@ -83,6 +83,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerAnimation: {fileID: 8347513948754478341}
+  cameraTransform: {fileID: 0}
 --- !u!1 &6329133930337781226
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +189,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4084228934684172019, guid: cef780495b60c824390cde12a7263714,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4715572040761074466}
+    - targetCorrespondingSourceObject: {fileID: 4084228934684172019, guid: cef780495b60c824390cde12a7263714,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1395430124514419386}
     - targetCorrespondingSourceObject: {fileID: 4084228934684172019, guid: cef780495b60c824390cde12a7263714,
         type: 3}
@@ -239,6 +244,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4715572040761074466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983995501988565840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ca338206e8ac2429398070410ab4b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1395430124514419386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountCollectedCoin: 0
+  PlayerStatsCanvas: {fileID: 0}
 --- !u!114 &8347513948754478341
 MonoBehaviour:
   m_ObjectHideFlags: 0

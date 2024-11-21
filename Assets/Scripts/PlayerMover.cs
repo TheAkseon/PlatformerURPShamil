@@ -3,89 +3,115 @@ using UnityEngine;
 public class PlayerMover : MonoBehaviour
 {
     public float speed = 6.0f;
-    public float sprintMultiplier = 2.0f; // Умножитель для ускорения
+    public float sprintMultiplier = 2.0f;
     public float jumpHeight = 2.0f;
     public float gravity = -9.81f;
-    public float groundCheckRadius = 0.4f; // Радиус для проверки касания земли
-    public Transform groundCheck;          // Точка для проверки земли
-    public LayerMask groundMask;           // Маска слоя для земли
+    public float groundCheckRadius = 0.4f;
+    public Transform groundCheck;
+    public LayerMask groundMask;
 
     private CharacterController controller;
     private Vector3 velocity;
-    private bool isGrounded;               // Флаг для проверки на земле
+    private bool isGrounded;
     private bool isJumping;
 
-    public PlayerAnimation playerAnimation; // Добавляем ссылку на PlayerAnimation
+    public PlayerAnimation playerAnimation;
+    public Transform cameraTransform;
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        if (Camera.main != null)
+        {
+            cameraTransform = Camera.main.transform;
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
-        // Проверка касания земли с помощью CheckSphere
+        // Проверка, находится ли игрок на земле
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
-            isJumping = false; // Сбрасываем флаг прыжка при приземлении
-            playerAnimation.Idle(true); // Если на земле, ставим состояние Idle
-            playerAnimation.Jump(false);
-            playerAnimation.Run(false);
-            playerAnimation.Walk(false);
-        }
-        else
-        {
-            playerAnimation.Idle(false); // Если не на земле, убираем Idle
+            if (isJumping)
+            {
+                isJumping = false;
+                playerAnimation.Jump(false); // Выключаем анимацию прыжка при приземлении
+            }
         }
 
-        // Движение по плоскости X и Z
+        // Получение входных данных для движения
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
+        Vector3 moveDirection = new Vector3(moveX, 0, moveZ).normalized;
 
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        if (moveDirection.magnitude >= 0.1f)
+        {
+            // Вычисление направления поворота
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+            float smoothAngle = Mathf.LerpAngle(transform.eulerAngles.y, targetAngle, 0.1f);
+            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
 
-        // Изменение: проверка нажатия клавиши Shift для ускорения
-        float currentSpeed = speed;
-        if (Input.GetKey(KeyCode.LeftShift) && !isJumping) // Проверяем, удерживается ли клавиша Shift
-        {
-            currentSpeed *= sprintMultiplier; // Увеличиваем скорость при удерживании Shift
-            playerAnimation.Run(true); // Если бежим, устанавливаем состояние Run
-            playerAnimation.Walk(false);
-            playerAnimation.Idle(false);
-        }
-        else if (move.magnitude > 0 && !isJumping) // Если есть движение
-        {
-            playerAnimation.Walk(true); // Если движемся, устанавливаем состояние Walk
-            playerAnimation.Run(false);
-            playerAnimation.Idle(false);
+            // Приведение движения к направлению камеры
+            Vector3 move = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+
+            // Скорость бега
+            float currentSpeed = speed;
+            controller.Move(move.normalized * currentSpeed * Time.deltaTime);
+
+            if (Input.GetKey(KeyCode.LeftShift) && !isJumping)
+            {
+                currentSpeed *= sprintMultiplier;
+                controller.Move(move.normalized * currentSpeed * Time.deltaTime);
+
+                // Анимация бега
+                playerAnimation.Run(true);
+                playerAnimation.Walk(false);
+                playerAnimation.Idle(false);
+            }
+            else if(!isJumping)
+            {
+
+                // Анимация ходьбы
+                playerAnimation.Walk(true);
+                playerAnimation.Run(false);
+                playerAnimation.Idle(false);
+            }
         }
         else
         {
-            playerAnimation.Walk(false); // Если не движемся, убираем состояние Walk
-            playerAnimation.Run(false); // Убираем состояние Run
+            // Если нет движения, включаем Idle
+            playerAnimation.Walk(false);
+            playerAnimation.Run(false);
+            if (!isJumping)
+            {
+                playerAnimation.Idle(true);
+            }
         }
 
-        controller.Move(move * currentSpeed * Time.deltaTime);
-
-        // Прыжок при нажатии на пробел, если персонаж на земле и не в прыжке
+        // Прыжок
         if (Input.GetButtonDown("Jump") && isGrounded && !isJumping)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            isJumping = true; // Устанавливаем флаг прыжка
-            playerAnimation.Jump(true); // Устанавливаем состояние Jump
+            isJumping = true;
+            playerAnimation.Jump(true); // Включаем анимацию прыжка
+            playerAnimation.Walk(false); // Выключаем другие анимации
+            playerAnimation.Run(false);
+            playerAnimation.Idle(false);
         }
 
         // Применение гравитации
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        // Если персонаж на земле, убираем состояние Jump
-        if (isGrounded && !isJumping)
+        // Если приземлились
+        if (isGrounded && !isJumping && velocity.y < 0)
         {
-            playerAnimation.Jump(false); // Убираем состояние Jump, когда приземляемся
+            playerAnimation.Jump(false); // Убираем состояние прыжка
         }
     }
 }
