@@ -256,6 +256,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ca338206e8ac2429398070410ab4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerController: {fileID: 0}
+  RespawnPlace: {fileID: 0}
+  SceneChanger: {fileID: 0}
 --- !u!114 &1395430124514419386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,8 +317,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.6400912, z: 1}
-  m_Center: {x: 0, y: 0.96524966, z: 0}
+  m_Size: {x: 1, y: 1.7889383, z: 1}
+  m_Center: {x: 0, y: 0.8908261, z: 0}
 --- !u!54 &5854250791341142463
 Rigidbody:
   m_ObjectHideFlags: 0
